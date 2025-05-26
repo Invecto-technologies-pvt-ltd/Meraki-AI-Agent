@@ -42,8 +42,7 @@ if st.session_state.selected_org_id:
     if st.sidebar.button("Create Network", key="create_net_btn"):
         net = create_network(
             st.session_state.selected_org_id,
-            new_net_name,
-            new_net_type
+            new_net_name
         )
         st.sidebar.success(
             f"Created network: {net.get('name')} (ID: {net.get('id')})"
@@ -65,8 +64,7 @@ if st.session_state.selected_org_id:
                 st.session_state.selected_network_id,
                 ssid_num,
                 ssid_name,
-                ssid_enabled,
-                authMode=ssid_auth
+                ssid_enabled
             )
             st.sidebar.success(
                 f"Created SSID: {ssid.get('name')} (#{ssid.get('number')})"

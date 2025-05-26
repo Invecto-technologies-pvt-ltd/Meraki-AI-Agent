@@ -1,0 +1,32 @@
+Index: app.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app.py b/app.py
+--- a/app.py
++++ b/app.py
+@@ -98,12 +98,20 @@
+ 
+ user_input = st.chat_input("Ask something about your Meraki network...")
+ if user_input:
++    # Append user message
+     st.session_state.chat_history.append(("user", user_input))
+     with st.chat_message("user"): st.markdown(user_input)
++
++    # Build context from history
++    context = "\n".join([f"{role}: {content}" for role, content in st.session_state.chat_history])
++    prompt = f"{context}\nassistant:"
++
++    # Get response
+     with st.chat_message("assistant"):
+         with st.spinner("Thinking..."):
+             try:
+-                resp = run_meraki_agent(user_input)
++                resp = run_meraki_agent(prompt)
+                 st.markdown(format_result(resp))
++                st.session_state.chat_history.append(("assistant", format_result(resp)))
+             except Exception as e:
+-                st.markdown(f"❌ Error: {e}")
++                st.markdown(f"❌ Error: {e}")
+\ No newline at end of file

@@ -191,11 +191,12 @@ def get_vpn_status(dashboard, network_id):
 # meraki_tools.py
 
 # --- Network Management ---
-def create_network(org_id, network_name, product_type='wireless'):
+def create_network(org_id, network_name):
     """
     Create a new network within an organization.
     """
-    network = client.organizations.createOrganizationNetwork(org_id, name=network_name, productTypes=product_type)
+    product_types = ['appliance', 'switch', 'wireless']
+    network = client.organizations.createOrganizationNetwork(org_id, name=network_name, productTypes=product_types)
     return network
 
 def update_network(network_id, name=None, type=None, tags=None):
